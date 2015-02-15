@@ -3,6 +3,7 @@
 set -e
 
 mkdir -p prelinux/bin prelinux/sbin prelinux/etc
+mkdir -p prelinux/dev prelinux/proc prelinux/sys
 
 touch sbase/sed.1 # XXX this should be removed at some point
 
