@@ -24,14 +24,14 @@ ln -s /proc/self/fd/2 /dev/stderr
 
 MBR=`dd if=$MBR_DISK bs=512 count=1 quiet | sha256sum`
 if [[ "$GOOD_MBR" == "$MBR" ]]; then
-        echo "MBR is unchanged"
+        echo "MBR looks fine"
 else
         echo "fuck fuck fuck fuck fuck"
 fi
 
 BOOT=`dd if=$BOOT_PARTITION bs=8192 count=2048 quiet | sha256sum`
 if [[ "$GOOD_BOOT" == "$BOOT" ]]; then
-        echo "/boot is unchanged"
+        echo "/boot looks fine"
 else
         echo "shit shit shit shit shit"
 fi
