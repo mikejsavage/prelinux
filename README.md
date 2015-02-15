@@ -66,7 +66,7 @@ this, opening a potential avenue for attack.
 
 One possible solution to the problem is to check the squishy parts of
 your OS have not been tampered with. Closed vendors have taken to using
-[Trusted Platform Module][TPM] to ensure untrusted kernels do not get
+[Trusted Platform Module][TPM] to ensure modified kernels don't get
 executed, but that was Not Invented Here.
 
 Prelinux allows you to create a multi-stage boot that checks itself for
