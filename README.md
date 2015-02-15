@@ -26,11 +26,11 @@ installing a real OS. It depends on:
 - curl, to download source tarballs
 - tar, to extract source tarballs
 - git, to clone the suckless repositories
-- a full autotools toolchain (blame cryptsetup), for doing absolutely
+- a full autotools toolchain (blame cryptsetup), to do absolutely
   nothing
 - [musl][musl], for building everything
-- man-db, to convert the sbase/ubase manpages to text files (a prelinux
-  system does not have a manpage viewer so this is helpful)
+- man-db, to convert the sbase/ubase manpages to text files (prelinux
+  doesn't have a manpage reader)
 
 The method I recommend you use to create an installation with prelinux
 is as follows:
