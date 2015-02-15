@@ -1,0 +1,31 @@
+#! /bin/sh
+
+PRELINUX_PARTITION=/dev/sda2
+
+echo "prelinux initrd"
+
+exec > /dev/console < /dev/console 2>&1
+
+mount -n -t proc -o nosuid,noexec,nodev proc /proc
+mount -n -t sysfs -o nosuid,noexec,nodev sysfs /sys
+mount -n -t tmpfs -o nosuid,mode=0755 dev /dev
+
+smdev -s
+echo "/bin/smdev" > /proc/sys/kernel/hotplug
+
+# you could put /bin/mksh in here and call it a day if you wanted the
+# world's worst distro
+# but let's mount a LUKS partition instead
+cryptsetup luksOpen $PRELINUX_PARTITION prelinux
+
+mkdir /prelinux
+# ubase mount requires the -t
+mount -t ext4 /dev/mapper/prelinux /prelinux
+
+echo > /proc/sys/kernel/hotplug
+
+umount /sys
+umount /proc
+umount /dev
+
+exec switch_root /prelinux /sbin/init

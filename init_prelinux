@@ -1,0 +1,56 @@
+#! /bin/sh
+
+MBR_DISK=/dev/sda
+BOOT_PARTITION=/dev/sda1
+REAL_PARTITION=/dev/sda3
+
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin
+
+mount -n -t proc -o nosuid,noexec,nodev proc /proc
+mount -n -t sysfs -o nosuid,noexec,nodev sysfs /sys
+mount -n -t tmpfs -o nosuid,mode=0755 dev /dev
+
+smdev -s
+echo "/usr/bin/smdev" > /proc/sys/kernel/hotplug
+
+# dd needs these
+# ideally smdev would do this for us
+ln -s /proc/self/fd/0 /dev/stdin
+ln -s /proc/self/fd/1 /dev/stdout
+ln -s /proc/self/fd/2 /dev/stderr
+
+# load checksums, assume this defines $GOOD_MBR and $GOOD_BOOT
+. /shasums.sh
+
+MBR=`dd if=$MBR_DISK bs=512 count=1 quiet | sha256sum`
+if [[ "$GOOD_MBR" == "$MBR" ]]; then
+        echo "MBR is unchanged"
+else
+        echo "fuck fuck fuck fuck fuck"
+fi
+
+BOOT=`dd if=$BOOT_PARTITION bs=8192 count=2048 quiet | sha256sum`
+if [[ "$GOOD_BOOT" == "$BOOT" ]]; then
+        echo "/boot is unchanged"
+else
+        echo "shit shit shit shit shit"
+fi
+
+# mount another LUKS partition
+cryptsetup.static luksOpen $REAL_PARTITION real
+mkdir -p /new_root
+mount -t ext4 /dev/mapper/real /new_root
+
+echo > /proc/sys/kernel/hotplug
+
+umount /sys
+umount /proc
+umount /dev
+
+# pivot into it
+mkdir -p /new_root/pivot
+cd /new_root
+pivot_root . pivot
+
+# hand off to a real init
+exec /sbin/init
