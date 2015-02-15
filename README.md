@@ -51,7 +51,7 @@ is as follows:
 - Write the prelinux files to disk. `initrd-XXX` goes in `/boot` with
   your kernel, `prelinux` can be written to its own partition
 - Install Linux, not necessarily Arch, and __make sure you don't let the
-  installer nuke `/boot`__
+  installer nuke__ `/boot`
 
 
 Using prelinux for authenticated disk encryption
