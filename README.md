@@ -106,24 +106,25 @@ checksums to be anything usable.
 Secondly, how do you __know__ that your code was running? An attacker
 who is able to observe your boot process may be able to mimic it. A
 malicious initrd could `dd` to create fake disk activity, tell the user
-everything is wonderful, and then steal their encryption key. A possible
-workaround for this is to store two pieces of information on the
-prelinux partition:
+everything is wonderful, and then steal their encryption key.
+
+A possible workaround for this is to build an approximation to
+two-factor authentication. Firstly, we store two pieces of information
+on the prelinux partition:
 
 - a counter which is incremented on every boot
-- a secret which is used to create one-time MACs of the counter,
+- a secret which is used to create one-time hashes of the counter,
   __after__ the incremented counter has been synced to disk (this is
-  required so MACs don't get repeated if you pull the plug)
+  required so hashes don't get repeated if you pull the plug)
 
-You can then keep the secret on another device (such as your phone) and
-the last value of the counter you saw. This gives you something
-approximating two-factor authentication of your boot process. You need
-to check two things:
+Then you can copy the secret on another device (such as your phone) and
+keep track of the last counter value you saw. This allows you to check
+two things:
 
-- the MAC computed by prelinux is valid
-- counter values aren't being reused - someone could have been looking
-  over your shoulder!
-
+- the hash computed by prelinux is valid, implies the prelinux partition
+  knows the secret
+- counter values aren't being reused - an attacker could have been
+  looking over your shoulder!
 
 Other applications
 ------------------
