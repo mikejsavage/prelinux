@@ -108,9 +108,10 @@ who is able to observe your boot process may be able to mimic it. A
 malicious initrd could `dd` to create fake disk activity, tell the user
 everything is wonderful, and then steal their encryption key.
 
-A possible workaround for this is to build an approximation to
-two-factor authentication. Firstly, we store two pieces of information
-on the prelinux partition:
+What we are aiming for is two way authentication. The user is
+authenticated when they enter their password, and we can build a scheme
+for authenticating the code running. Firstly, we store two pieces of
+information on the prelinux partition:
 
 - a counter which is incremented on every boot
 - a secret which is used to create one-time hashes of the counter,
