@@ -2,7 +2,7 @@
 
 set -e
 
-version=R50d
+version=R50e
 dir=mksh-$version
 archive=$dir.tgz
 
