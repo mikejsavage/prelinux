@@ -10,5 +10,5 @@ find sbase/ -maxdepth 1 -type f ! -name "sbase-box" -executable | sed "s/^sbase\
 find ubase/ -maxdepth 1 -type f ! -name "ubase-box" -executable | sed "s/^ubase\(.*\)/slink \/bin\1 ubase-box 777 0 0/g" >> initramfs.lst
 
 for linux in /usr/src/linux-*; do
-	/usr/src/$linux/usr/gen_init_cpio initramfs.lst > initrd-${linux#linux-}
+	"$linux"/usr/gen_init_cpio initramfs.lst > "initrd-${linux#/usr/src/linux-}"
 done
