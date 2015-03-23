@@ -3,6 +3,7 @@ deps
 eudev
 lvm2
 mksh
+nettle
 popt
 ports
 sbase

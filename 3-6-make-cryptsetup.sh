@@ -8,7 +8,7 @@ cd cryptsetup
 	--enable-static-cryptsetup \
 	--disable-shared \
 	--disable-nls \
-	--with-crypto-backend=kernel \
+	--with-crypto-backend=nettle \
 	CC=musl-gcc \
 	CFLAGS="-I$PWD/../deps/include -L$PWD/../deps/lib" # for some reason we need this
 	LDFLAGS="-L$PWD/../deps/lib"
