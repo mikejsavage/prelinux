@@ -2,19 +2,6 @@
 
 set -e
 
-# > hhhhhhhh has joined #musl
-# hhhhhhhh holy goddamn fuck gnu tools are written by idiots
-# hhhhhhhh naturally, the make target to install the libs from util-linux is
-# hhhhhhhh make install-usrlib_execLTLIBRARIES
-# hhhhhhhh but when you do it with CC=musl-gcc
-# hhhhhhhh it compiles with with musl-gcc
-# hhhhhhhh then it compiles them again with regular gcc
-# hhhhhhhh and installs the regular libs
-# hhhhhhhh fuck
-# zhasha   What did you expect?
-# hhhhhhhh i don't know
-# zhasha   Hell, it's probably unintentional but a side effect of having 614 times more code than necessary
-
 cd util-linux
 ./configure -C \
 	--prefix= \
@@ -49,7 +36,7 @@ make \
 	install-nodist_blkidincHEADERS \
 	install-uuidincHEADERS \
 	DESTDIR="$PWD"/../deps
-	# install-usrlib_execLTLIBRARIES \ # fucking idiots
+	# install-usrlib_execLTLIBRARIES \ # for some reason this rebuilds everything against gcc...
 
 cp -r .libs ../deps/lib
 
