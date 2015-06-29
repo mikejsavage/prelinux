@@ -28,6 +28,7 @@ cd util-linux
 	--disable-switch_root \
 	--disable-pivot_root \
 	--without-python \
+	--without-ncurses \
 	--without-user \
 	--disable-nls \
 	CC=musl-gcc
